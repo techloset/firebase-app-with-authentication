@@ -3,15 +3,15 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { db } from "../config/firebase";
 import { addDoc, collection, getDocs ,doc,  updateDoc, deleteField, deleteDoc} from "firebase/firestore";
 import React, { useEffect } from "react";
-import { add, filtering,setValue,del } from "../reducer/reducer";
+import { add, setValue,del } from "../reducer/reducer";
 export default ()=>{
     const dispatch = useDispatch();
     const input = useSelector((state) => state.rootReducer.inpValueReducer.value);
-    const filterInput = useSelector(
-      (state) => state.rootReducer.filterReducer.value
-    );
-    async function getData() {
-      const querySnapshot = await getDocs(collection(db, "todo"));
+    const id=useSelector((state)=>state.rootReducer.userId.id)
+    const todos=useSelector(state=>state.rootReducer.todosReducer.todos)
+ 
+    async function getData(userId) { 
+      const querySnapshot = await getDocs(collection(db, userId));
       querySnapshot.forEach((doc) => {
         const data = doc?.data();
         dispatch(add({...data, id:doc.id}));
@@ -20,8 +20,7 @@ export default ()=>{
  
     const storeData = async (value) => {
       try {
-        console.log(value)
-        const docRef =await addDoc(collection(db, "todo"), {
+        const docRef =await addDoc(collection(db, id), {
           value,
        
         });
@@ -38,35 +37,29 @@ export default ()=>{
       }
     };
     function setStoreData(input){
-      console.log(input)
       if(input.value!=''){
 
         storeData(input);
         dispatch(setValue(""));
       }
     }
-   async function deleteData(id){
-    // console.log(input)
-    // const cityRef = doc(db, 'todo')
+   async function deleteData(todoId){
+  
  dispatch(
-  del(id)
+  del(todoId)
  )
-await deleteDoc(doc(db, "todo", id));
+await deleteDoc(doc(db, id, todoId));
 
     }
-    async function updateData(id,value){
-console.log(id)
-
-const docRef = doc(db, 'todo', id);
+    async function updateDb(todoId){
+      console.log(todoId)
+const updatedTodo=todos.find(todo=>todo.id==todoId);
+const {value}=updatedTodo
+const docRef = doc(db, id,todoId);
   await updateDoc(docRef, {
-    value: 'fdsafdjkasdfj'
+    value
   });
-// await docRef.update({
-//   value,id
-// });
-// await docRef.set({
-//   value: 'new value'
-// }, { merge: true });
+
     }
 
   return(
@@ -74,11 +67,10 @@ const docRef = doc(db, 'todo', id);
         storeData,
         dispatch,
         input,
-        filterInput,
         setStoreData,
         deleteData,
         getData,
-        updateData
+        updateDb
 
     }
   )

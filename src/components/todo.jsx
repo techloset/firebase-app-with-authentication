@@ -1,14 +1,13 @@
 import List from "./list";
 import React, { useEffect } from "react";
 import { setValue } from "../reducer/reducer";
-import { setfilterValue } from "../reducer/reducer";
-import useTodo from "../hooks/useTodo";
+
+import useTodo from "../hooks/UseTodo";
 
 const todo = () => {
-  const { storeData, dispatch, input, filterInput,setStoreData,getData } = useTodo()
-  useEffect(() => {
-    getData();
-  }, []);
+  const { storeData, dispatch, input, filterInput,setStoreData} = useTodo();
+
+  
   return (
     <div className="">
       <>
