@@ -1,30 +1,30 @@
 
-import Todo from "./components/todo";
+import Todo from './components/Todo'
 import Navbar from "./components/navbar/Navbar";
-// import UseHome from "./hooks/UseHome";/
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "./config/firebase";
+import { auth } from "./config/Firebase";
+import { setUserId } from './store/reducer/Reducers';
 import { useEffect } from "react";
+import { useDispatch } from 'react-redux';
+import { getDbData } from './store/reducer/Reducers';
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { setUserId } from "./reducer/reducer";
-import useTodo from './hooks/UseTodo'
 function App() {
-  const {getData}=useTodo()
-  const dispatch=useDispatch()
-    const navigate = useNavigate();
-    useEffect(() => {
+const dispatch=useDispatch()
+const navigate=useNavigate()
 
-  onAuthStateChanged(auth, (user) => {
-    const uid = user?.uid;
-    if (!uid) {
-      navigate("/login");
-    }
-    else{
-      getData(uid)
-       dispatch(setUserId(uid))
-    }
-  });
+    useEffect(() => {
+      onAuthStateChanged(auth, (user) => {
+
+        const uid = user?.uid;
+        if (!uid) {
+          navigate("/login");
+        }
+        else{
+         dispatch( getDbData(uid))
+           dispatch(setUserId(uid))
+        }
+      })
+
   }, []);
   return (
     <>

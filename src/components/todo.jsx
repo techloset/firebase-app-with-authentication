@@ -1,12 +1,11 @@
-import List from "./list";
+import List from "./TodoListComponent";
 import React, { useEffect } from "react";
-import { setValue } from "../reducer/reducer";
+// import { setValue } from "../reducer/Reducers";
 
 import useTodo from "../hooks/UseTodo";
 
-const todo = () => {
-  const { storeData, dispatch, input, filterInput,setStoreData} = useTodo();
-
+const Todo = () => {
+  const { storeData,   input, setInput} = useTodo();
   
   return (
     <div className="">
@@ -19,33 +18,26 @@ const todo = () => {
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
                 onKeyUp={(e) => {
                   if (e.key === "Enter") {
-                    setStoreData(input)
-                  
+                    storeData(input)
+                  setInput('')
                   }
                 }}
                 placeholder="Add Tasks"
-                onChange={(e) => dispatch(setValue(e.target.value))}
+                onChange={(e) => {setInput(e.target.value)}}
                 value={input}
               />
               <button
                 className=" absolute right-0 px-4 py-[8.5px] bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-200 ease-in-out"
                 onClick={() => {
-                  setStoreData(input)
+                  storeData(input)
+                  setInput("");
                   
                 }}
               >
                 Add
               </button>
             </div>
-            <input
-              onChange={(e) => {
-                dispatch(setfilterValue(e.target.value));
-                dispatch(filtering(e.target.value));
-              }}
-              placeholder="Filter Tasks"
-              className="w-full mt-4 px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
-              value={filterInput}
-            />
+          
           </div>
         </div>
 
@@ -55,4 +47,4 @@ const todo = () => {
   );
 };
 
-export default todo;
+export default Todo;

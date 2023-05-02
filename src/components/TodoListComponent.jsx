@@ -1,17 +1,13 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
-import { del, update } from "../reducer/reducer";
+import { DeleteTodo,updateTodo } from "../store/reducer/Reducers";
 import useTodo from "../hooks/UseTodo";
-
 const list = () => {
-  const [inpVisibility, setInpVisibility] = useState(false);
-  const state = useSelector((state) => state.rootReducer.todosReducer.todos);
-  const inpValue = useSelector(
-    (state) => state.rootReducer.updateFieldReducer.value
-  );
+  const [inpVisibility, setInpVisibility] = useState({visibility:false,id:''});
+  const [updatedValue, setUpdatedValue] = useState('');
+  const state = useSelector((state) => state.todoSlice.todos);
+
   let dispatch = useDispatch();
-  const { deleteData, updateDb } = useTodo();
   return (
     <div className="flex flex-col items-center ">
       <h1 className="text-3xl font-bold  mb-2 self-center w-[30%] mt-10">
@@ -24,36 +20,43 @@ const list = () => {
             className="flex items-center justify-between py-2 border-b-2 border-gray-300"
             key={index}
           >
-            {inpVisibility ? (
+            {(inpVisibility.visibility &&item.id==inpVisibility.id)? (
+              
               <input
                 type="text"
                 defaultValue={item.value}
                 className="border-blue-500 rounded-md pl-1 border-2 "
                 onChange={(e) => {
-                  dispatch(update({ index, value: e.target.value }));
+                  setUpdatedValue(e.target.value)
                 }}
               />
             ) : (
               <p className={`text-lg  todos w-[13.9125rem]  text-gray-500`}>
                 {item.value}
               </p>
-            )}
+)}
 
             <>
               <button
                 className="ml-2 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-200 ease-in-out"
-                onClick={() => deleteData(item.id)}
+                onClick={() => dispatch(DeleteTodo(item.id))}
               >
                 Delete
               </button>
               <button
                 className="ml-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-200 ease-in-out"
                 onClick={(e) => {
-                  inpVisibility && updateDb(item.id);
-                  setInpVisibility(!inpVisibility);
+                 if(inpVisibility.visibility){
+ dispatch(updateTodo({value:updatedValue,id:item.id}))
+                 }
+                 else{
+
+                   setUpdatedValue(item.value)
+                  }
+                  setInpVisibility({visibility:!inpVisibility.visibility,id:item.id});
                 }}
               >
-                {inpVisibility ? "Save" : "Edit"}
+                {(inpVisibility.visibility &&item.id==inpVisibility.id)? "Save" : "Edit"}
               </button>
             </>
           </div>

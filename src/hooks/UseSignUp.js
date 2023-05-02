@@ -1,6 +1,6 @@
 import React ,{useState}from "react";
 import {  createUserWithEmailAndPassword  } from 'firebase/auth';
-import { auth } from "../config/firebase";
+import { auth } from "../config/firebase"
 import {toast,ToastContainer} from 'react-toastify'
 import { useNavigate } from "react-router-dom";
 
@@ -15,7 +15,7 @@ export default function UseSignUp() {
 
             const userCredential=await createUserWithEmailAndPassword(auth,email,password)
             toast.success('User is Created')
-            navigate('/login')
+            navigate('/Home')
         }catch(err){
 toast.error(err.message)
         }

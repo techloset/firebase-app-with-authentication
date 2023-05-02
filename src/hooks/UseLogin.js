@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { auth } from "../config/firebase";
+import { auth } from "../config/Firebase";
 import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -17,10 +17,10 @@ export default function UseLogin() {
         password
       );
       toast.success("You are logged In");
-      navigate("/");
+      navigate("/Home");
     } catch (err) {
       if (err.code === "auth/invalid-email") {
-        toast.error("Invalid email address");
+        toast.error("Invalid email address")
       } else if (err.code == "auth/missing-password") {
         toast.error("Kindly Enter Password");
       } else if (err.code == "auth/wrong-password") {

@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { signOut } from "firebase/auth";
-import { auth } from "../../config/firebase";
+import { auth } from "../../config/Firebase";
 import { useDispatch } from "react-redux";
-import { empty } from "../../reducer/reducer";
-export default () => {
-  const dispatch=useDispatch()
+
+// import { empty } from "../../reducer/Reducers";
+export default () => {      
   return (
     <nav className="shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -20,7 +20,6 @@ export default () => {
             
             <button
             onClick={async()=>{
-              dispatch(empty())
               await signOut(auth)
             }}
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 ml-4 rounded"
