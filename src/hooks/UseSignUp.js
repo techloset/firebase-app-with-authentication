@@ -15,7 +15,7 @@ export default function UseSignUp() {
 
             const userCredential=await createUserWithEmailAndPassword(auth,email,password)
             toast.success('User is Created')
-            navigate('/Home')
+            navigate('/')
         }catch(err){
 toast.error(err.message)
         }

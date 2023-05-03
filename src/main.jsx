@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import { store } from "./store/Store.jsx";
 import { Provider } from "react-redux";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider,Route } from "react-router-dom";
 import "./index.css";
 import Login from "./pages/loginPage/Login.jsx";
 import Signup from "./pages/signupPage/SignUp.jsx";
@@ -12,7 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const router = createBrowserRouter([
   {
-    path: "/Home",
+    path: "/",
     element: <App />,
   },
   {

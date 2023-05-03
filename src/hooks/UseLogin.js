@@ -17,7 +17,7 @@ export default function UseLogin() {
         password
       );
       toast.success("You are logged In");
-      navigate("/Home");
+      navigate("/");
     } catch (err) {
       if (err.code === "auth/invalid-email") {
         toast.error("Invalid email address")
