@@ -1,7 +1,7 @@
 import List from "./TodoListComponent";
 import React, { useEffect } from "react";
 // import { setValue } from "../reducer/Reducers";
-
+import {toast} from 'react-toastify'
 import useTodo from "../hooks/UseTodo";
 
 const Todo = () => {
@@ -17,9 +17,14 @@ const Todo = () => {
                 type="text"
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
                 onKeyUp={(e) => {
-                  if (e.key === "Enter") {
-                    storeData(input)
-                  setInput('')
+                  if (e.key === "Enter" ) {
+                    if(input!=''){
+
+                      storeData(input)
+                      setInput('')
+                    }else{
+                      toast.info('Field is empty')
+                    }
                   }
                 }}
                 placeholder="Add Tasks"
@@ -29,8 +34,14 @@ const Todo = () => {
               <button
                 className=" absolute right-0 px-4 py-[8.5px] bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-200 ease-in-out"
                 onClick={() => {
-                  storeData(input)
-                  setInput("");
+                  if(input!=''){
+
+                    storeData(input)
+                    setInput("");
+                  }
+                  else{
+                    toast.info('Field is empty')
+                  }
                   
                 }}
               >
